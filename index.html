@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -83,11 +83,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="1-Install-Git"><a href="#1-Install-Git" class="headerlink" title="1. Install Git"></a>1. Install Git</h1><p><code>brew install git</code></p>
+<h1 id="2-Install-Node-js"><a href="#2-Install-Node-js" class="headerlink" title="2. Install Node.js"></a>2. Install Node.js</h1><p>Download the Install Package from the official Site.</p>
+<h1 id="3-Install-Hexo"><a href="#3-Install-Hexo" class="headerlink" title="3. Install Hexo"></a>3. Install Hexo</h1><p><code>npm install -g hexo-cli</code></p>
+<h1 id="4-Create-first-blog-with-hexo"><a href="#4-Create-first-blog-with-hexo" class="headerlink" title="4. Create first blog with hexo"></a>4. Create first blog with hexo</h1><h2 id="1-Create-GitHub-Pages"><a href="#1-Create-GitHub-Pages" class="headerlink" title="1.Create GitHub Pages"></a>1.Create GitHub Pages</h2><h2 id="2-Setup-SSH-Keys"><a href="#2-Setup-SSH-Keys" class="headerlink" title="2.Setup SSH Keys"></a>2.Setup SSH Keys</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ssh-keygen -t rsa -C &quot;chenbin1211002@hotmail.com&quot;</div><div class="line">$ssh-agent -s</div><div class="line">#ssh-add ~/.ssh/id_rsa</div></pre></td></tr></table></figure>
+<p><code>Copy into github setting&#39;s SSH Keys</code></p>
+<p><code>ssh -T git@github.com</code></p>
+<h2 id="2-Create-Hexo-Blog"><a href="#2-Create-Hexo-Blog" class="headerlink" title="2.Create Hexo Blog"></a>2.Create Hexo Blog</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$cd /Users/chbin/Projects/hexo_git_markdown/</div><div class="line">$hexo init cncomkyle</div><div class="line">$npm i</div><div class="line">$git init</div><div class="line">$npm i -S hexo-deployer-git</div></pre></td></tr></table></figure>
+<h2 id="3-Change-config-yml"><a href="#3-Change-config-yml" class="headerlink" title="3. Change _config.yml"></a>3. Change _config.yml</h2><p><code>Emacs _config.yml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy: </div><div class="line">  type: git</div><div class="line">  repo: git@github.com:cncomkyle/cncomkyle.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$hexo generate -d</div><div class="line">$hexo deploy</div></pre></td></tr></table></figure>
+<h2 id="3-Deploy-new-post"><a href="#3-Deploy-new-post" class="headerlink" title="3.Deploy new post"></a>3.Deploy new post</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$hexo new chbin_test</div><div class="line">$emacs vi source/_posts/chbin_test.md</div><div class="line">$hexo generate -d</div></pre></td></tr></table></figure>
+<h1 id="5-Install-MacDown"><a href="#5-Install-MacDown" class="headerlink" title="5. Install MacDown"></a>5. Install MacDown</h1><h1 id="6-Refer-Link-List"><a href="#6-Refer-Link-List" class="headerlink" title="6. Refer Link List"></a>6. Refer Link List</h1><ol>
+<li><a href="https://zirho.github.io/2016/06/04/hexo/" target="_blank" rel="external">How to setup a blog on github with Hexo</a></li>
+<li><a href="How to setup a blog on github with Hexo">GitHub Pages</a></li>
+<li><a href="http://jingyan.baidu.com/article/d8072ac47aca0fec95cefd2d.html" target="_blank" rel="external">史上最详细“截图”搭建Hexo博客并部署到Github</a></li>
+</ol>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/24/chbin-hello-world/" data-id="ciunjp8zq0000myn2atkdqat8" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/10/24/chbin-hello-world/" data-id="ciunn6sz0000002n2qcmwe7g2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -132,7 +148,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/24/hello-world/" data-id="ciunjp8zy0001myn2323qrryv" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/10/24/hello-world/" data-id="ciunn6sz6000102n290nnoqvb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -167,7 +183,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -192,7 +208,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
