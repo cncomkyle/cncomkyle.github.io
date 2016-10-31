@@ -3,14 +3,33 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hexo</title>
+  <title>programming_from_the_ground_study | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="#1 Introduction
+Three kinds of language:
+
+Machine Language
+Assembly Language
+High-Level Language : allow you to describe the program in a more natural language.A single command in a high-level languag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="programming_from_the_ground_study">
+<meta property="og:url" content="http://yoursite.com/2016/10/31/programming-from-the-ground-study/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#1 Introduction
+Three kinds of language:
+
+Machine Language
+Assembly Language
+High-Level Language : allow you to describe the program in a more natural language.A single command in a high-level languag">
+<meta property="og:updated_time" content="2016-10-31T08:50:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="programming_from_the_ground_study">
+<meta name="twitter:description" content="#1 Introduction
+Three kinds of language:
+
+Machine Language
+Assembly Language
+High-Level Language : allow you to describe the program in a more natural language.A single command in a high-level languag">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -59,9 +78,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-programming-from-the-ground-study" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-programming-from-the-ground-study" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/31/programming-from-the-ground-study/" class="article-date">
   <time datetime="2016-10-31T06:33:14.000Z" itemprop="datePublished">2016-10-31</time>
@@ -74,8 +91,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/31/programming-from-the-ground-study/">programming_from_the_ground_study</a>
+    <h1 class="article-title" itemprop="name">
+      programming_from_the_ground_study
     </h1>
   
 
@@ -146,108 +163,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-chbin-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/24/chbin-hello-world/" class="article-date">
-  <time datetime="2016-10-24T04:09:18.000Z" itemprop="datePublished">2016-10-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/24/chbin-hello-world/">chbin_hello_world</a>
-    </h1>
+    <a href="/2016/10/24/chbin-hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">chbin_hello_world</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-Install-Git"><a href="#1-Install-Git" class="headerlink" title="1. Install Git"></a>1. Install Git</h1><p><code>brew install git</code></p>
-<h1 id="2-Install-Node-js"><a href="#2-Install-Node-js" class="headerlink" title="2. Install Node.js"></a>2. Install Node.js</h1><p>Download the Install Package from the official Site.</p>
-<h1 id="3-Install-Hexo"><a href="#3-Install-Hexo" class="headerlink" title="3. Install Hexo"></a>3. Install Hexo</h1><p><code>npm install -g hexo-cli</code></p>
-<h1 id="4-Create-first-blog-with-hexo"><a href="#4-Create-first-blog-with-hexo" class="headerlink" title="4. Create first blog with hexo"></a>4. Create first blog with hexo</h1><h2 id="1-Create-GitHub-Pages"><a href="#1-Create-GitHub-Pages" class="headerlink" title="1.Create GitHub Pages"></a>1.Create GitHub Pages</h2><h2 id="2-Setup-SSH-Keys"><a href="#2-Setup-SSH-Keys" class="headerlink" title="2.Setup SSH Keys"></a>2.Setup SSH Keys</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ssh-keygen -t rsa -C &quot;chenbin1211002@hotmail.com&quot;</div><div class="line">$ssh-agent -s</div><div class="line">#ssh-add ~/.ssh/id_rsa</div></pre></td></tr></table></figure>
-<p><code>Copy into github setting&#39;s SSH Keys</code></p>
-<p><code>ssh -T git@github.com</code></p>
-<h2 id="2-Create-Hexo-Blog"><a href="#2-Create-Hexo-Blog" class="headerlink" title="2.Create Hexo Blog"></a>2.Create Hexo Blog</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$cd /Users/chbin/Projects/hexo_git_markdown/</div><div class="line">$hexo init cncomkyle</div><div class="line">$npm i</div><div class="line">$git init</div><div class="line">$npm i -S hexo-deployer-git</div></pre></td></tr></table></figure>
-<h2 id="3-Change-config-yml"><a href="#3-Change-config-yml" class="headerlink" title="3. Change _config.yml"></a>3. Change _config.yml</h2><p><code>Emacs _config.yml</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy: </div><div class="line">  type: git</div><div class="line">  repo: git@github.com:cncomkyle/cncomkyle.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-<p>Save &amp; Quit</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$hexo generate -d</div><div class="line">$hexo deploy</div></pre></td></tr></table></figure>
-<h2 id="3-Deploy-new-post"><a href="#3-Deploy-new-post" class="headerlink" title="3.Deploy new post"></a>3.Deploy new post</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$hexo new chbin_test</div><div class="line">$emacs vi source/_posts/chbin_test.md</div><div class="line">$hexo generate -d</div></pre></td></tr></table></figure>
-<h1 id="5-Install-MacDown"><a href="#5-Install-MacDown" class="headerlink" title="5. Install MacDown"></a>5. Install MacDown</h1><h1 id="6-Refer-Link-List"><a href="#6-Refer-Link-List" class="headerlink" title="6. Refer Link List"></a>6. Refer Link List</h1><ol>
-<li><a href="https://zirho.github.io/2016/06/04/hexo/" target="_blank" rel="external">How to setup a blog on github with Hexo</a></li>
-<li><a href="How to setup a blog on github with Hexo">GitHub Pages</a></li>
-<li><a href="http://jingyan.baidu.com/article/d8072ac47aca0fec95cefd2d.html" target="_blank" rel="external">史上最详细“截图”搭建Hexo博客并部署到Github</a></li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/24/chbin-hello-world/" data-id="ciuy3ux9h0000utn22roal5nz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/24/hello-world/" class="article-date">
-  <time datetime="2016-10-24T03:48:32.000Z" itemprop="datePublished">2016-10-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/24/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/24/hello-world/" data-id="ciuy3ux9q0002utn2v3w9yjlk" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 </section>
         
