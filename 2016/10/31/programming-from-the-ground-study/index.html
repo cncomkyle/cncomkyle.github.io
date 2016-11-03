@@ -21,7 +21,7 @@ Three kinds of language:
 Machine Language
 Assembly Language
 High-Level Language : allow you to describe the program in a more natural language.A single command in a high-level languag">
-<meta property="og:updated_time" content="2016-10-31T08:50:20.000Z">
+<meta property="og:updated_time" content="2016-11-02T14:24:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="programming_from_the_ground_study">
 <meta name="twitter:description" content="#1 Introduction
@@ -67,9 +67,9 @@ High-Level Language : allow you to describe the program in a more natural langua
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -153,11 +153,115 @@ High-Level Language : allow you to describe the program in a more natural langua
 <li>base pointer addressing mode : similar to indirect addressing, but you alos include a number called the offset to add to the register’s value before using it for lookup.</li>
 </ul>
 <h1 id="Chapter-3-Your-First-Programs"><a href="#Chapter-3-Your-First-Programs" class="headerlink" title="Chapter 3. Your First Programs"></a>Chapter 3. Your First Programs</h1><p>Please tinker around with the programms as much as you can. Even if your tinkering does not work, every failure will help you learn.</p>
+<p>In order to transform a source code into a program that a computer can run, we need to assemble and link it.</p>
+<p>Assembling is the process that transforms what you typed into instructions for the machine.Assembling transforms the huma-readable file into a machine-readable one.</p>
+<p>An object file is code that is in the machine’s language, but has not been completely put together.</p>
+<p>The linker is the program that is responsbile for putting the object files together and adding information to it so that the kernel knows how to load and run it.</p>
+<p>You must always re-assemble and re-link programs after you modify the source code for the changes to occur in the program. </p>
+<p>Unix executables usually have no extension.</p>
+<p>Anything starting with a period isn’t directly translated into a machine instruction. Instead, it’s an instruction to the assembler itself. These are called assembler directives or pseduo-operations because they are handled by the assembler and are not actually run by the computer.</p>
+<p>.section .data<br>The .section command breaks your program up into sections.This command starts the data section, where you list any memory storage you will need for data.</p>
+<p>.section .text<br>which starts the text section. The text section of a program is where the program instructions live.</p>
+<p>.global _start</p>
+<p>This instructs the assembler than _start is important to remember._start is a symbol, which means that it is going to be replaced by something else either during assembly or linking. Symbols are generally used to mark locations of programs or data, so you can refer to them by name instead of by their location number.</p>
+<p>Symbols are used so that the assember and linker can take care of keeping track of addresses, and you can concentrate on writing your program.</p>
+<p>.global means that the assembler shouldn’t discard this symbol after assembly, because the linker will need it. _start is a special symbol that always needs to be marked with .globl because it marks the location of the start of program. <em>Without marking this location in this way, when the computer load your program it won’t know where to begin running your program.</em></p>
+<p>_start:<br>defines the valule of the _start lable. A label is s symbol followed by a colon. Labels defind a symbol’s value. When the assembleer is assembling the program, it has to assign each data value and instruction an address.</p>
+<p>movl $1, %eax<br>In assembly language, many instructions have operands. movl has two operands - the source and the destination. Operands can be numbers, memory location references, or registers.</p>
+<p>On most instructions which have two operands, the first one is the source operand and the second one is the destination. Note that in these cases, the source opreand is not modified at all.</p>
+<p>On x86 processors, there are several general-purpose registers:</p>
+<ul>
+<li>%eax</li>
+<li>%ebx</li>
+<li>%ecx</li>
+<li>%edx</li>
+<li>%edi</li>
+<li>%essi </li>
+</ul>
+<p>In addtions to these general-purpose registers, there are also several special-purpose registers, including:</p>
+<ul>
+<li>%ebp</li>
+<li>%esp</li>
+<li>%eip</li>
+<li>%eflags</li>
+</ul>
+<p>%rax is 64-bit version of %eax.</p>
+<p>The dollar-sign in front of the one indicates that we want to use immediate mode addressing. Without the dollar-sign it would do direct addressing, loading whatever number is at address 1.</p>
+<p>The number 1 is t he number of the exit system call.</p>
+<p>Many operations such as calling other programs, dealing with files, and exiting have to be handled by the operating system through system calls.</p>
+<p>The operationg system, however, usually need more information than just which call to make. For example, when dealing with files, the operating system needs to know which fild you are dealing with, what data you want to write, and other details. The extra details, called parameters are stored in other registers.</p>
+<p>Linux simply requires that certain registers be loaded with certain parameter values before making a system call.</p>
+<p>%eax is always required to be loaded with the system call number.</p>
+<p>In the exit system call, %ebx is required to be loaded with the exit status.</p>
+<p>int $0x80<br>The int stands for interrupt. The 0x80 is the interrupt number to use. An interrupt interrupts the normal program flow, and transfers control from our program to Linux so that it will do system call.</p>
+<p>Actually, the interrupt transfers control to whoever set up an interrupt handler for the interrupt number. In the case of Linux, all of them are set to be handled by the Linux kernel.</p>
+<p>If we didn’t signal the interrupt, then no system call would have been performed.</p>
+<p>recap: 重新分类，重新归纳</p>
+<p>Operating System features are accessed through system calls. There are invoked by settign up the registers in a special way and issuing the instruction int $0x80. Linux knows which system call we want to access by what we stored in the %eax register. Each system call has other requirements as to what need to be stored in the other registers. System call number 1 is the exit system call, which requires the status code to be placed in %ebx.</p>
+<p>To assembly the program type in the command:<br>as exit.s -o exit.o</p>
+<p>The link the file, enter the command:<br>ld exit.o -o exit</p>
+<p>Remember that any time you change the source file, you have to re-assemble and re-link your program.</p>
+<p>leave out : 遗漏，不考虑</p>
+<p>indexed addressing mode instrustion :<br>movl BEGINNINGADDRESS(, %INDEXREGISTER, WORDSIZE)</p>
+<p>The compare instruction also affects a register not mentioned here, the %eflags register. The is also known as the status register. Just be aware that the result of the comparison is stored in the status register.</p>
+<p>Jump statements:</p>
+<ol>
+<li>je : Jump if the values were equal</li>
+<li>jg : Jump if the second value was greater than the first value</li>
+<li>jge : Jump if the second value was greater than or equal to the first value</li>
+<li>jl : Jump if the second value was less than the first value.</li>
+<li>jle : Jump if the second value was less than or equal to the first value.</li>
+<li>jmp : Jump no matter what. </li>
+</ol>
+<p>The general form or memory address references is this:</p>
+<p>ADDRESS_O_OFFSET(%BASE_OR_OFFSET, %INDEX, MULTIPLIER)</p>
+<p>direct addressing mode:</p>
+<p>movl ADDRESS, %eax</p>
+<p>indexed addressing mode:</p>
+<p>movl string_start(, %ecx, 1), %eax</p>
+<p>indirect addressing mode:</p>
+<p>movl (%eax), %ebx</p>
+<p>base pointer addressing mode:</p>
+<p>movl 4(%eax), %ebx</p>
+<p>immediate mode: it’s used to load direct values into registers or memory locations.</p>
+<p>movl $12, %eax</p>
+<p>register addressing mode: simply moves data in or out of a register.</p>
+<p>If you only wanted to work with two bytes at a time, you could just use %ax. %ax is the least-significant half of the %eax register, and is useful when dealing with two-byte quantities. %ax is further divided up into %al and %ah. %al is the least-significant byte of %ax, and %ah is the most significant byte.</p>
+<h1 id="Chapter-4-All-about-Functions"><a href="#Chapter-4-All-about-Functions" class="headerlink" title="Chapter 4. All about Functions"></a>Chapter 4. All about Functions</h1><p>To assist programmers in workding together in groups, it’s necessary to break programs apart into seperate pieces, which communicate with each other through well-defined interfaces.</p>
+<p>However, ultimately there are thing that you cannot write functions for which must be provided by the system. Those are called primitive funtions(or just primitives) - they are the basics which everything else is built off.</p>
+<p>In assembly language, the primitives are usually the same thing as the system calls, even though system calls aren’t true functions.</p>
+<p>the call instruction handles passing the return address for you, and ret handles using that address to return back to where you called the function from.</p>
+<p>Each computer program that runs uses a region of memory called the stack to eable functions to work properly.</p>
+<p>The computer’s stack lives at the very top addresses of memory.</p>
+<p>In memory the stack starts at the top of memory and grows downward due to architectural considerations. Therefore, when we refer to the “top of stack” remember it’s at the bottom of the stack’s memory.</p>
+<p>How do we know where the current top of stack is ? The stack register, <strong>%esp, always contains a pointer to the current top of the stack</strong>, wherever it is.</p>
+<p>Every time we push something onto the stack with pushl, %esp get subtracted by 4 so that it points to the new top of stack(remember, each word is four bytes long, and the stack grows downward).</p>
+<p>Before executing a function, a program pushes all of the paramters for the function onto the stack in the reverse order that they are documented.</p>
+<p>The call instruction does two things : First it pushes the address of the next instruction, which is the return address, onto the stack. <strong>Then it modifies the instruction pointer (%eip) to point to the start of the function</strong>.</p>
+<p>base pointer register : %ebp. The base pointer is a special register used for accessing function parameters and local variables.</p>
+<p>Copying the stack pointer into the base pointer at the beginning of a function allows you to always know where your parameters are, even while you may be pushing things on and off the stack.</p>
+<p>%ebp will always be where the stack pointer was at the beginning of the function.</p>
+<p>Stack frame : it consists of all of the stack variables used within a function, including paramters, local variables, and the return address.</p>
+<p>clobber : 痛打, 击倒, 拉垮</p>
+<p>The only difference between the global and static variables is that static variables are only used by one function, while global variables are used by many functions.</p>
+<p>When the function done executing , it stores it’s return value in %eax.</p>
+<p>Before a function returns control to the code that called it, it must restore the previous stack frame.</p>
+<p>Before return , we have to reset the stack pointer %esp, and the base pointer %ebp to what they were when the function began.</p>
+<p>Therefore to return from a function you have to do the following :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">movl %ebi, %esp</div><div class="line">popl %ebp</div><div class="line">ret</div></pre></td></tr></table></figure>
+<p>At this point, you should consider all local variable to be disposed of.</p>
+<p>C language convention : also known as ABI, or Application Binary Interface.</p>
+<p>The difference between call and jmp is that call also pushes the return address onto the stack so that the function can return, while the jmp does not.</p>
+<p>stretch : 伸展，Stretch your brain.</p>
+<p>The base case is the point where recursion will stop. Without a base case, the function would go on forever calling itself until it eventually ran out of stack space. </p>
+<p>You should always clean up your stack parameters after a function call returns.</p>
+<p>popl %ebp<br>movl %esp, %ebp<br>This create the stack frame for this function. These two lines will be the way you should start every function.</p>
+<h1 id="Chapter-5-Dealing-with-Files"><a href="#Chapter-5-Dealing-with-Files" class="headerlink" title="Chapter 5. Dealing with Files"></a>Chapter 5. Dealing with Files</h1><p>Data which is stored in files is called persistent data.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/31/programming-from-the-ground-study/" data-id="ciuy3ux9m0001utn241y5impc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/31/programming-from-the-ground-study/" data-id="ciuy3ux9m0001utn241y5impc" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -168,7 +272,7 @@ High-Level Language : allow you to describe the program in a more natural langua
   
   
     <a href="/2016/10/24/chbin-hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ancien</strong>
       <div class="article-nav-title">chbin_hello_world</div>
     </a>
   
@@ -201,7 +305,7 @@ High-Level Language : allow you to describe the program in a more natural langua
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -230,7 +334,7 @@ High-Level Language : allow you to describe the program in a more natural langua
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
