@@ -50,7 +50,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -128,7 +128,7 @@
 <p>The only way the computer knows that a memory location is an instructions is that a speical-purpose register called the instruction pointer points to them at one point or another. If the instruction pointer points to a memory word, it’s loaded as an instruction.</p>
 <p>Processors have a number of different ways of accessing data, known as <em>addressing modes</em>.</p>
 <ul>
-<li>immediate mode : the data to accesss in embedded in the instruction itself.</li>
+<li>immediate mode : the data to accesss is embedded in the instruction itself.</li>
 <li>register addressing mode : the instruction contains a register to access, rather than a memory location.</li>
 <li>direct addressing mode : the instruction contains the memory address to access.</li>
 <li>indexed addressing mode : the instruction contains a memory address to access, and also specified an index register to offset that address.</li>
@@ -231,20 +231,169 @@
 <p>Before a function returns control to the code that called it, it must restore the previous stack frame.</p>
 <p>Before return , we have to reset the stack pointer %esp, and the base pointer %ebp to what they were when the function began.</p>
 <p>Therefore to return from a function you have to do the following :</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">movl %ebi, %esp</div><div class="line">popl %ebp</div><div class="line">ret</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">movl %ebp, %esp</div><div class="line">popl %ebp</div><div class="line">ret</div></pre></td></tr></table></figure>
 <p>At this point, you should consider all local variable to be disposed of.</p>
 <p>C language convention : also known as ABI, or Application Binary Interface.</p>
 <p>The difference between call and jmp is that call also pushes the return address onto the stack so that the function can return, while the jmp does not.</p>
 <p>stretch : 伸展，Stretch your brain.</p>
 <p>The base case is the point where recursion will stop. Without a base case, the function would go on forever calling itself until it eventually ran out of stack space. </p>
 <p>You should always clean up your stack parameters after a function call returns.</p>
-<p>popl %ebp<br>movl %esp, %ebp<br>This create the stack frame for this function. These two lines will be the way you should start every function.</p>
+<p>pushl %ebp<br>movl %esp, %ebp<br>This create the stack frame for this function. These two lines will be the way you should start every function.</p>
 <h1 id="Chapter-5-Dealing-with-Files"><a href="#Chapter-5-Dealing-with-Files" class="headerlink" title="Chapter 5. Dealing with Files"></a>Chapter 5. Dealing with Files</h1><p>Data which is stored in files is called persistent data.</p>
+<p>Open file is handled with the open system call:</p>
+<ul>
+<li>%eax hold the system call number : 5</li>
+<li>%ebx : the address of the first character of the filename</li>
+<li>%ecx : the read/write intentions, 0 as the read from, 03101 write to(must include the leading zero)</li>
+<li>%edx : the permission</li>
+</ul>
+<p>Linux will then return to you a file descriptor in %eax. Remember, this is a number than you can use to refer to this file throughout your program.</p>
+<p>Error codes can be distinguished because they are always negative numbers.</p>
+<p>The write systeme call will give back the number of bytes written in %eax or an error code.</p>
+<p>When you are through with your files, you can then tell Linux to close them. Afterwards, your file descriptor is no longer valide. close , system call 6.</p>
+<p>A buffer is a continuous block of bytes used fo bulk data transfer.</p>
+<p>.bss, this section is like the data section, except that it doesn’t take up space in the executable. This section can reserve storage, but it can’t initialize it.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">.section .bss</div><div class="line">.lcomm my_buffer, 500</div><div class="line"></div><div class="line">movl $my_buffer, %ecx</div><div class="line">movl 500, %edx</div><div class="line">movl 3, %eax</div><div class="line">int $0x80</div></pre></td></tr></table></figure>
+<p>Without the dollar sign, my_buffer is treated as a memory location, and is accessed in direct addressing mode. The dollar sign switcheds it to immediate mode addressing, which actually loads the number represented by my_buffer (which is the address of my_buffer) itself into %ecx.</p>
+<p>In Linux, almost everyhing is a “file”.</p>
+<p>Linxu programs usually have at lease three open file descriptors when they begin.</p>
+<ul>
+<li>STDIN : Standard input. it’s a read-only file, and usually represents your keyboard. This is always file descriptor 0.</li>
+<li>STDOUT: Standard output. it’s write-onnly file, and usually represents your screen display. This is always file descriptor 1.</li>
+<li>STDERR: Standard error. it’s write-only file, and usually represents your screen display. This is always file descriptor 2.</li>
+</ul>
+<p>Communication between processed is usually done through special files called pipes.</p>
+<p>Notice that many of the files you write to aren’t files at all. Some of these files have different methods of opening and creating them than regular files(i.e. - they don’t use the open system call), but they can all be read form and written to using the standard read and write system calls.</p>
+<p>Coding is complex, but there are a lot of things we can do like this to make it easier.</p>
+<p>In assembly language, we declare constants with the .equ directive.</p>
+<p>Subtracting an upper-case letter from the same lower-case letter gives us how much we nend to add to a lower-case letter ot make it upper case.</p>
+<p>Using symbols for these numbers instead of the numbers themselves makes it easier to see what data is being used and moved.</p>
+<p>Guarding againt potential user and programming erros is a important task of a programmer.</p>
+<p>Before rading and writing the files we must open them.</p>
+<p>Fortunately, command-line parameters are already stored by Linux in an easy-to-acces location, and are already null-terminated. When a Linux program begins, all pointers to command-line arguments are stored on the stack.</p>
+<p>The number of arguments is stored at 8(%esp), the name of the program is stored at 12(%esp), and the arguments are stored from 16(%esp) on.</p>
+<p>In normal programs, every system call should normally be checked for success or failture. In failture cases, %eax will hold an error code instead of a return value.</p>
+<p>end-of-file : the number 0</p>
+<h1 id="Chapter-6-Reading-and-Writing-Simple-Records"><a href="#Chapter-6-Reading-and-Writing-Simple-Records" class="headerlink" title="Chapter 6. Reading and Writing Simple Records"></a>Chapter 6. Reading and Writing Simple Records</h1><p>.include “linux.s”<br>These statements cause the given files to basically be pasted right there in code. You don’t need to do this with functions, because the linker can take care of combining functions export with .globl.</p>
+<p>Assembler directive .rept. This direcive repeats the content of the file between .rept and .endr directives the number of times specified after .rept. </p>
+<h1 id="Chapter-7-Developing-Robust-Programs"><a href="#Chapter-7-Developing-Robust-Programs" class="headerlink" title="Chapter 7. Developing Robust Programs"></a>Chapter 7. Developing Robust Programs</h1><p>Robust programs are able to handle error conditions gracefully. Building robust programs is essential to the practice of programming. Writing robust programs takes discipline and work - it usally entails finding every possible problem that can occur, and coming up with an action plan for your program to take.</p>
+<p>Remember that every error message that pops up on your screen had to be prgrammed in by someone.</p>
+<p>Most important is testing corner cases or edge cases. Corner cases are the inputs that are most likely to casue problems or behave unexpectedly.</p>
+<p>contingency :  偶然性, 可能性, 意外事故</p>
+<p>Truly robust software has a uniqe erro code for every possible contingency.</p>
+<p>Error codes should also be accompanied by descriptive error messages.</p>
+<p>A troubleshooting guide, not the program itself, is an appropriate place to list possible reasons and cources for action for each error message.</p>
+<p>After every system call, function call, or instruction which can have erroneous results you should add error checking and handling code.</p>
+<p>In programming, these shared code files are referred to as shared libraries, shared objects, dynamic-link libraries, DLLs, or .so files.</p>
+<p>In previous chapters, the linker would resolve all of the names to physical memory addresses, and the names wolud be thrown away. When using dynamic linking, the name itself resides within the exectuable, and is resolvde by the dynamic linker when it’s run. When the program is run by the user, the dynamic linker loads the shared libraries listed in our link statement, and then finds all of the functions and variable names that were named by our program but not found at link time, and matcheds them up with correspoing entries in the shared libraries it loads. It then replaces all of the names with the addresses which they are loaded at. This sounds time-consuming. It is to a small degress, but it only happens once - at the program startup time.</p>
+<p>When you use shared libraries, your program is then dynamically-linked, which means that not all of the code needed to run the program is actually contained within the program file itself, but in external libraries.</p>
+<p>/lib/ld-linux.so.2 : dynamic linker</p>
+<p>standard places : listed in /etc/ld.so.conf and in the contents of the LD_LIBRARY_PATH environment variable.</p>
+<p>Run the ldd program on various programs that are on your Linux distribution, and see what libraries they rely on.</p>
+<p>null character : \0</p>
+<p>thorough : 十分的，彻底的</p>
+<p>ld -shared write-record.o read-record.o -o librecord.so<br>This links both of these files together into a shared library called librecord.so</p>
+<p>LD_PRELOAD</p>
+<h1 id="Chapter-9-Intermediate-Memory-Topics"><a href="#Chapter-9-Intermediate-Memory-Topics" class="headerlink" title="Chapter 9. Intermediate Memory Topics"></a>Chapter 9. Intermediate Memory Topics</h1><p>Each instruction is a different length. Most instruations take up one or two storage locations for the instruction itself, and then storage locations for the instrution’s arguments.</p>
+<p>Word:<br>This is the size of normal register. On x86 processors, a word is four bytes long. Most computer operations handle a word at a time.</p>
+<p>An address is a number that refers to a byte in memeory. </p>
+<p>Every piece of data on the computer not in a register has an address.</p>
+<p>Normally, we don’t ever type the nummeric address of anything, but we let the assembler do it for us. When we use labels in code, the symbol used in the label will be equivalent to address it is labelling.</p>
+<p>A pointer is a register or memory word whose value is an address.</p>
+<p>When your program is loaded into memory, each .section is loaded into its own region of memory. All of the code and data declared in each section is brought together, even if they were seperated in your source code.</p>
+<p>The actual instructions(the .text section) are loaded at the address 0x08048000. The .data section is loaded immediately after that, followed by the .bss section.</p>
+<p>The last byte than can be addressed on Linus is location 0xbffffff. Linux start the stack here and grows it downward toward the other sections.</p>
+<p>Your program’s data region starts at the bottom of memory and goes up. The stack start at the top of memory, and moves downward with each push.</p>
+<p>The last accessible memory address to your program is called the system break (also called the current break or just the break).</p>
+<p>step on :踩上，踏上</p>
+<p>As a program writer, you only access virtual memory.</p>
+<p>Physical memory refers to the actual RAM chips inside your computer and what they contain.</p>
+<p>Virtual memory is the way your program thinks about memory.</p>
+<p>The process of assigning virtual addresses to physical addresses is called mapping.</p>
+<p>Virtual memory can be mapped to more than just physical memory;it can be mapped to disk as well.</p>
+<p>Swap partitions on Linux allow Linux’s virtual memory system to map meory not only to physical RAM, but also to disk blocks aw well.</p>
+<p>processor’s virtual-to-physical memory lookup tables</p>
+<p>All of the mermory mappings are done a page at a time. Physical memory assignment, swapping, mapping, etc. are all done to memory pages instead of individual memory addresses.</p>
+<p>Sometimes so many programms can be loaded that there is hardly enough physical memory for them. They wind up spending more time just swapping memory on and off of disk than then do actuall processing it.</p>
+<p>swap death which lead to your system being unreponsive and unproductive.</p>
+<p>The amount of memory that your program currently has in physical memory is called its resident set site(RSS in top).</p>
+<p>Linux maps all of your virtual memory into physical memory or swap. If you try to access a piece of virtual memory that hasn’t been mapped yet, it triggers an error known as a segmentation fault, which wiil terminate your program.</p>
+<p>beforehand:预先<br>this is all great if you know beforehand how much storage you will need.</p>
+<p>If you need more memory, you can just tell Linux where you want the new break point to be, and Linux will map all the memory you need between the current and new break point, and then move the break point to the spot you specify. That memory is now available for your program to use. The way we tell Linux to move the break point is through the brk system call.</p>
+<p>A memory manager is a set of routines that takes care of dirty work of getting your program memory for you.</p>
+<p>through : 完结de<br>When you’re done with it. you tell deallocate that you are through with i.t</p>
+<p>The pool of memory used by memory managers is commonly referred to as the heap.</p>
+<p>The way memory managers work is that they keep track of where the system break is, and where the memory than you have allocated is. They mark each block of memory in the heap as being used or unused. When you request memory, then memory manager checks to see if there are any unused blocks of the appropriate size. If not, it calls the brk system call to request more memory. When you free memory it marks the block as unused so that future request can retrieve it. </p>
+<p>It is very primitive but is shows the principles quite well.</p>
+<p>As usual, I will give you the program first for you to look through. Afterwards will follow an in-depth explanation.</p>
+<p>The section of memory being managed is commonly referred to as the heap.</p>
+<p>doozy: 非常显眼</p>
+<p>simplistic : 过分简单的</p>
+<p>Linux can keep pages of memory on disk instead of in memory.</p>
+<p>A program that runs in constant time takes the same amount of time no matter how many elements you are managing.</p>
+<p>System call takes a long time. They aren’t like functions, becasue hte processor has to switch modes.</p>
+<p>The processor has to switch into kernel mode, then Linux maps the memroy, and then swtiches back to user mode for your application to continue running. This is also called a Context Switch. You should avoid calling the kernel unless you really need to.</p>
+<p>necessiate: 需要，使成为必需</p>
+<p>misnomer : 取名不当。</p>
+<p>continually : 不断地, 频繁地</p>
+<h1 id="Chapter-10-Counting-like-a-Computer"><a href="#Chapter-10-Counting-like-a-Computer" class="headerlink" title="Chapter 10. Counting like a Computer"></a>Chapter 10. Counting like a Computer</h1><p>Heavy Metal Music</p>
+<p>dressy : 衣着考究 Wearing Dressy Clothes</p>
+<p>shrl : Shift Right Long.</p>
+<p>The 0b notation means that what follows is a binary number.</p>
+<p>make a point : 立论</p>
+<p>octal:八进制的</p>
+<p>mantissa : 尾数, exponent : 指数</p>
+<p>quantity : 数量，量</p>
+<p>be careful not to put any leading zeroes in front of decimal numbers, or they will be interepreted as octal numbers!</p>
+<p>In octal, each digit represented three bits. In hexadecimal, each digit represents four bits.</p>
+<p>hexadecimal numbers are prefixed with 0x.</p>
+<p>take some getting used to : 要慢慢适应</p>
+<p>Hexadecimal and octal numbers take some getting used to, but they are heavily used in computer programming.</p>
+<p>controversy : 争论，争吵</p>
+<p>account for :解释<br>If you read or write to network sockets, you may have to account for a different byte order in the protocol.</p>
+<p>extremely limitted means.</p>
+<p>quotient : 商，系数, </p>
+<p>little-endian, big-endian</p>
+<h1 id="Chapter-11-High-Level-Languages"><a href="#Chapter-11-High-Level-Languages" class="headerlink" title="Chapter 11. High-Level Languages"></a>Chapter 11. High-Level Languages</h1><p>Assembly language is the language used at the machine’s level, but most people find coding in assembly language too cumbersome for everyday use.</p>
+<p>marketable</p>
+<p>Knowing a wide variety of languages is useful for many reasons, including :</p>
+<ul>
+<li>Different languages are based on different concept, which will help you to learn different and better programming methods and ideas.</li>
+<li>Different languages are good for different types of projects.</li>
+<li>Diffreent companies have different standard languages, so knowing more languages makes your skills more marketable.</li>
+<li>The more languages you know, the easier it it to pick up new ones.</li>
+</ul>
+<p>flinch : 畏缩，退缩<br>Languages are simply tools, and learning to use a new tool should not be something a programmer flinches at.</p>
+<p>on the spot : 现场的 ,立即</p>
+<p>legwork:外勤工作，跑腿<br>do a lot for extra legwork.</p>
+<h1 id="Chapter-12-Optimization"><a href="#Chapter-12-Optimization" class="headerlink" title="Chapter 12. Optimization"></a>Chapter 12. Optimization</h1><p>Optimization is the process of making your application run more effectively.</p>
+<p>It’s better to not optimize at all than to optimize too soon.</p>
+<p>Even experienced programmer have trouble predicting which parts of the program will be the bottlenecks which need optimization, so you will probably end up wasting your time optimizing the wrong parts.</p>
+<p>revise : 修改</p>
+<p>bouncinng : 跳跃的, bouncing all over the place</p>
+<p>chips’ ultra-fase cache memory.</p>
+<p>Registers are the fastest memory locations on the computer.</p>
+<p>make wise usage of</p>
+<p>Functions are greate from the point of view of program management - they make it easy to break up your program into indepenedent, understandable, and resuable parts.</p>
+<p>Different addressing modes work at different speeds. The fasted are the immediate and register addressing modes. Direct is the next fastet, indirect is next, and base pointer and indexed indirect are the slowest.</p>
+<p>smattering : 肤浅的知识，片段的知识<br>These are just a smattering of examples of the kinds of local optimizations possible.</p>
+<p>However, remember that the maintainability and readability of code is much more important except under extreme circumstances.</p>
+<p>Global optimization often involves restructuring code to avoid performance problems, rather than trying to find the best way through them.</p>
+<p>Usually, applications have a limit to how parallelizable they are. The more parellelizable your application is, the better it can take advantage of multiprocessor and clustered computer configuations.</p>
+<p>Two great benefits resultting from statelessness is that most stateless functions are parallelizable and often benefit from memoization.</p>
+<h1 id="Chapter-13-Moving-On-from-Here"><a href="#Chapter-13-Moving-On-from-Here" class="headerlink" title="Chapter 13. Moving On from Here"></a>Chapter 13. Moving On from Here</h1><p>leave out : 省去，遗漏</p>
+<p>Computer Programming is a vast subject. As a programmer, you will need to be prepared to be constantly learning and pushing your limits.</p>
+<p>A language that doesn’t affect the way you think about programming is not worth knowing.</p>
+<p>poverty : 贫穷, bandit : 强盗，scarcity : 缺乏，armed 武装</p>
+<p>spit : 唾液，吐出</p>
+<p>GDB : GNU Debugger</p>
+<p>culprit : 犯人， 罪犯</p>
+<p>Notice that in GDB, registers are prefixed with dollar signs rather than percent signs.<br>print /d $eax : print in decimal<br>print /$eax : print in hexadecimal</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/31/programming-from-the-ground-study/" data-id="ciuy3ux9m0001utn241y5impc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/31/programming-from-the-ground-study/" data-id="civit9hzf0000u5n2gnpx6bgq" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -297,7 +446,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/24/chbin-hello-world/" data-id="ciuy3ux9h0000utn22roal5nz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/24/chbin-hello-world/" data-id="civit9hzm0001u5n2iegu5oul" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -342,7 +491,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/24/hello-world/" data-id="ciuy3ux9q0002utn2v3w9yjlk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/24/hello-world/" data-id="civit9hzq0002u5n2si77d05f" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -367,7 +516,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
@@ -377,7 +526,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
